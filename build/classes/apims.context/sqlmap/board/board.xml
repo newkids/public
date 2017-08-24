@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<sqlMap namespace="board">
+
+
+	<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap" />
+	<typeAlias alias="boardVO" type="apims.board.service.BoardVO" />
+
+	<select id="board.list" parameterClass="java.util.HashMap" resultClass="egovMap">
+		SELECT 		*
+		FROM 		board
+		ORDER BY	board_no desc
+	</select>
+	
+	<select id="board.getBoardContent" parameterClass="java.util.HashMap" resultClass="egovMap">
+		select *
+		from board b
+		where b.board_no=#boardNo#
+	</select>
+
+
+	<select id="board.select" parameterClass="java.lang.Integer" resultClass="boardVO">
+	SELECT 		board_no
+				,board_title
+				,board_content
+				,board_user
+				, DATE_FORMAT(board_date, '%Y-%m-%d %H:%i:%s') board_date
+	FROM 		board
+	WHERE 		1=1
+	AND			board_no = #boardNo#
+	ORDER BY	board_no desc
+	</select>
+	
+	
+	<insert id="board.insertCommunity" parameterClass="boardVO">
+insert into board(
+		board_pw,board_title,board_content,board_user,board_date)
+		values(
+		#boardPw#,#boardTitle#,#boardContent#,#boardUser#,now()
+		)
+</insert>
+
+	<update id="board.modContent" parameterClass="boardVO">
+		update board b
+		set b.board_title=#boardTitle#,
+		b.board_content=#boardContent#,
+		b.board_user=#boardUser#,
+		b.board_date=now()
+		where b.board_no=#boardNo#
+	</update>
+
+	<select id="board.getUser" parameterClass="boardVO" resultClass="egovMap">
+		select * from board
+		where
+		<isNotNull property="board_pw">
+			and password = #boardPw#
+		</isNotNull>
+	</select>
+	
+	
+	<delete id="board.delete" parameterClass="java.lang.Integer">
+		DELETE FROM board WHERE board_no = #boardNo#
+	</delete>
+
+</sqlMap>

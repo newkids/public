@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+	<sqlMap namespace="login">
+
+	<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias alias="loginVO" type="apims.login.service.LoginVO"/>
+
+	<select id="login.getUser" parameterClass="loginVO" resultClass="egovMap">
+		select * from members
+		where 1=1
+		<isNotNull property="id">
+			and	 id = #id#
+		</isNotNull>
+		<isNotNull property="pw">
+			and	password = #pw#
+		</isNotNull>
+	</select>
+</sqlMap>

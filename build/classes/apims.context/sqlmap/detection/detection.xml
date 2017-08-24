@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+	<sqlMap namespace="detection">
+
+	<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+
+	<select id="detection.getJuminList" parameterClass="java.util.HashMap" resultClass="egovMap">
+		SELECT 		j.user_id,
+					j.jumin_no
+		FROM 		jumin j
+		<isNotEmpty>
+
+		</isNotEmpty>
+	</select>
+
+	<select id="detection.getPhonList" parameterClass="java.util.HashMap" resultClass="egovMap">
+		SELECT 		p.user_id,
+					p.phon_no
+		FROM 		phon p
+	</select>
+</sqlMap>
